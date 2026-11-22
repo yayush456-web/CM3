@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>Commando 3</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    // Must be set BEFORE ruffle.js loads.
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      autoplay: "on",
+      unmuteOverlay: "hidden",
+      splashScreen: false,
+      letterbox: "on",
+      scale: "showAll",
+      forceScale: true,
+      contextMenu: "off",
+      openUrlMode: "deny",
+      showSwfDownload: false,
+      maxExecutionDuration: 60
+    };
+  </script>
+</head>
+<body>
+  <!-- Game surface (sized in JS to the 608x400 game aspect ratio) -->
+  <div id="player-host"></div>
+
+  <!-- Boot splash -->
+  <div id="splash">
+    <div class="splash-title">COMMANDO 3</div>
+    <div class="splash-sub" id="splash-msg">Loading game engine…</div>
+    <div class="splash-bar"><div></div></div>
+  </div>
+
+  <!-- Fatal error box (shows the real reason instead of a blank screen) -->
+  <div id="error-box" class="hidden">
+    <h2>Something went wrong</h2>
+    <pre id="error-text"></pre>
+    <button id="error-close" type="button">Dismiss</button>
+  </div>
+
+  <!-- Touch controls -->
+  <div id="touch-ui" data-vis="full">
+    <div id="top-bar">
+      <button class="pill" id="btn-vis" type="button" aria-label="Controls visibility">🎮</button>
+      <button class="pill" data-tap="KeyP" type="button" aria-label="Pause">❚❚</button>
+    </div>
+
+    <!-- Move stick: left/right = A/D, up = W (jump), down = S (crouch) -->
+    <div id="move-zone" class="zone zone-left">
+      <div class="stick-base" id="move-base">
+        <span class="arrow a-up">▲</span><span class="arrow a-down">▼</span>
+        <span class="arrow a-left">◀</span><span class="arrow a-right">▶</span>
+        <div class="stick-knob" id="move-knob"></div>
+      </div>
+      <span class="zone-label">MOVE · UP = JUMP</span>
+    </div>
+
+    <!-- Aim stick: direction = aim, push = auto-fire -->
+    <div id="aim-zone" class="zone zone-right">
+      <div class="stick-base aim" id="aim-base">
+        <div class="crosshair"></div>
+        <div class="stick-knob aim" id="aim-knob"></div>
+      </div>
+      <span class="zone-label">AIM · FIRE</span>
+    </div>
+
+    <!-- Buttons -->
+    <button class="round jump" data-hold="KeyW" type="button">JUMP</button>
+    <div id="weapon-row">
+      <button class="round small" data-tap="KeyQ" type="button">◀<small>GUN</small></button>
+      <button class="round small" data-tap="KeyE" type="button">GUN<small>▶</small></button>
+    </div>
+  </div>
+
+  <!-- In-game menu (Android Back button) -->
+  <div id="menu" class="hidden">
+    <div class="menu-card">
+      <h2>Game paused</h2>
+      <button id="menu-resume" type="button">Resume</button>
+      <button id="menu-exit" type="button" class="danger">Exit game</button>
+    </div>
+  </div>
+
+  <script src="ruffle/ruffle.js"></script>
+  <script src="touch-controls.js"></script>
+</body>
+</html>
